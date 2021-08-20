@@ -27,8 +27,10 @@ npm i @diuxx/xjson
 import { xJson } from "../src/xJson";
 
 (async () => {
-  // init xJson object
+  // instanciate xJson object
   let movies: xJson = new xJson('examples/databases/test', 'movies');
+  
+  // read data
   await movies.init();
 })();
 ```
