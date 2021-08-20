@@ -24,7 +24,7 @@ npm i @diuxx/xjson
 
 ## Usage
 
-To init and link a json file in your projet instantiate and init it.
+To init and link a json file in your project instantiate and init it.
 
 ```js
 import { xJson } from "../src/xJson";
