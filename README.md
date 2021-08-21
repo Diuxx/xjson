@@ -24,35 +24,7 @@ npm i @diuxx/xjson
 
 ## Usage
 
-To init and link a json file in your project instantiate and init it.
-
-```js
-import { xJson } from "../src/xJson";
-
-interface User {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
-
-(async () => {
-  // instantiate xJson object.
-  let users: xJson = new xJson<User>('examples/databases/users');
-
-  // read data and get ready to work with.
-  await users.init();
-})();
-```
-The user.json file :
-
-```js
-{
-    "users": []
-}
-```
-
-write data in json file
+Init and write data in json file :
 
 ```js
 (async () => {
