@@ -29,11 +29,18 @@ To init and link a json file in your project instantiate and init it.
 ```js
 import { xJson } from "../src/xJson";
 
+interface User {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
 (async () => {
-  // instanciate xJson object
-  let movies: xJson = new xJson('examples/databases/test', 'movies');
-  
-  // read data
-  await movies.init();
+  // instantiate xJson object.
+  let users: xJson = new xJson<User>('examples/databases/users');
+
+  // read data and get ready to work with.
+  await users.init();
 })();
 ```

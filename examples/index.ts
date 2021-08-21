@@ -1,12 +1,16 @@
 import { xJson } from "../src/xJson";
 
+interface User {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+}
 
 (async () => {
-    let movies: xJson = new xJson('examples/databases/test', 'movies');
-    await movies.init();
+    // instantiate xJson object.
+    let users: xJson = new xJson<User>('examples/databases/users');
 
-    console.log(' -- done --');
-    console.log(movies.data[0]);
-
-
+    // read data and get ready to work with.
+    await users.init();
 })();
