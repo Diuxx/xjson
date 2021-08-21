@@ -37,7 +37,7 @@ Init and write data in json file :
     // use internal add method to use xJson options like auto increment.
     users.add({ firstName: 'Nicolas' });
     
-    // You can also use pure JS to add data.
+    // you can also use pure JS to add data.
     users.data.push({ firstName: 'Nicolas' });
 
     // save all modifications in target file.
