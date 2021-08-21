@@ -62,17 +62,26 @@ write data in json file
     // read data and get ready to work with.
     await users.init();
 
+    // use internal add method to use xJson options like auto increment.
     users.add({ firstName: 'Nicolas' });
+    
+    // You can also use pure JS to add data.
+    users.data.push({ firstName: 'Nicolas' });
+
+    // save all modifications in target file.
     users.write();
 })();
 ```
 
 ```js
-{
+{ // users.json
   "users": [
     {
       "firstName": "Nicolas",
       "id": 1
+    },
+    {
+      "firstName": "Nicolas"
     }
   ]
 }
