@@ -44,3 +44,10 @@ interface User {
   await users.init();
 })();
 ```
+The user.json file :
+
+```js
+{
+    "users": []
+}
+```
