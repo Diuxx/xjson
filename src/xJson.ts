@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, createReadStream, writeFileSync } from "fs";
+import { existsSync, mkdirSync, createReadStream, writeFileSync, createWriteStream } from "fs";
 import _, { isNumber } from 'lodash';
 import path, { ParsedPath } from "path";
 
@@ -22,12 +22,11 @@ export enum Flag {
  */
 export class xJson<T = unknown> {
     public data: T[] = [];
-    private config: {[key: string]: any} = {
+    private config: Object = {
         file: '',
         ext: '.json',
         path: '.',
-        // json array key name.
-        key: '',
+        key: '', // json array key name.
         flags: [],
         primaryKey: 'id'
     };
@@ -78,6 +77,43 @@ export class xJson<T = unknown> {
         }
     }
 
+    public async add(...data: T[]) {
+        data.forEach((d: Object) => {
+            if (this.config.flags.includes(Flag.rule_id_auto_increment)) {
+                d[this.config.primaryKey] = ++this.increment;
+            }
+            this.data.push(d as T);
+        });
+    }
+
+    public async write(): Promise<void> {
+        await this.writeFile();
+    }
+
+    private async writeFile(): Promise<void> {
+        let length: number = this.data.length - 1;
+        let stream = createWriteStream(this.config.file);
+        return new Promise((resolve, reject) => {
+            stream.once('open', (fd) => {
+                stream.write('{\r\n');
+                stream.write(`  "${this.config.key}": [\r\n`);
+                this.data.forEach((e, i) => {
+                    let data: string = JSON.stringify(e, null, 2).split('\n').map(str => '    '.concat(str)).join('\r\n');
+                    if (i < length) {
+                        data += ',';
+                    }
+                    data += '\r\n';
+                    stream.write(`${data}`);
+                });
+                stream.write('  ]\r\n');
+                stream.write('}');
+                stream.end();
+            });
+            stream.on('err', (err) => reject(err));
+            stream.on('end', () => resolve());
+        });
+    }
+
     private async streamFile(file: string): Promise<any> {
         let stream = createReadStream(file);
         let chunks: Uint8Array[] = [];
@@ -90,11 +126,15 @@ export class xJson<T = unknown> {
 
     private calculateCurrentIncrement(): number {
         if (this.data.length == 0) {
-            return 1;
+            return 0;
         }
-        if (!(this.data[0] as Object).hasOwnProperty(this.config.primaryKey)) {
-            return 1;
+        if (!this.availableForIncrement(this.data[0])) {
+            return 0;
         }
-        return ((_.maxBy(this.data, (value: any) => value[this.config.primaryKey]) as any)[this.config.primaryKey] || 1) as number;
+        return ((_.maxBy(this.data, (value: Object) => value[this.config.primaryKey]) as any)[this.config.primaryKey] || 0) as number;
+    }
+
+    private availableForIncrement(data: Object): boolean {
+        return data.hasOwnProperty(this.config.primaryKey);
     }
 }
