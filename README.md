@@ -51,3 +51,31 @@ The user.json file :
     "users": []
 }
 ```
+
+write data in json file
+
+```js
+(async () => {
+    // instantiate xJson object.
+    let users: xJson = new xJson<User>('examples/databases/users');
+
+    // read data and get ready to work with.
+    await users.init();
+
+    users.add({ firstName: 'Nicolas' });
+    users.write();
+})();
+```
+
+```js
+{
+  "users": [
+    {
+      "firstName": "Nicolas",
+      "id": 1
+    }
+  ]
+}
+```
+
+By default auto increment is set to on. Thereby an id zill be added in your stored object.
