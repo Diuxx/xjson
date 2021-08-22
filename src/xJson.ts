@@ -6,20 +6,12 @@ type Object = {
     [key: string]: any
 };
 
-/**
- * 
- * 
- */
 export enum Flag {
     rule_no_duplicate = 1,
     rule_id_generated,
     rule_id_auto_increment
 }
 
-/**
- * 
- * 
- */
 export class xJson<T = unknown> {
     public data: T[] = [];
     private config: Object = {
@@ -30,7 +22,6 @@ export class xJson<T = unknown> {
         flags: [],
         primaryKey: 'id'
     };
-    private timer: number = 0;
     private increment: number = 0;
 
     constructor(file: string, dataName?: string) {
