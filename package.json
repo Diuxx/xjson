@@ -5,7 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "start": "ts-node examples/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish": "git pull& git push&npm version patch&npm publish"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.172",
@@ -22,7 +23,7 @@
     "json",
     "database",
     "storage",
-    "nosql",
+    "no-sql",
     "typescript"
   ],
   "author": "Diuxx",
