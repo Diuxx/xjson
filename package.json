@@ -1,6 +1,6 @@
 {
   "name": "@diuxx/xjson",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "Manage a local json storage.",
   "main": "index.ts",
   "scripts": {
